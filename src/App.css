@@ -1,0 +1,95 @@
+
+.App {
+    text-align: center;
+    height: var(--appHeight);
+    width: var(--appWidth);
+    background-color: var(--mainbg);
+    display: flex;
+    flex-direction: column;
+    color: var(--mainColor);
+    padding: 10px;
+}
+
+/*
+    ant design style
+*/
+
+.ant-modal {
+    margin: 18px 10px;
+}
+
+.ant-modal-content {
+    width: calc(100vw - 20px);
+    overflow: hidden;
+    max-height: calc(95vh - 20px);
+    background-color: var(--modalbg)!important;
+}
+
+.ant-modal-header {
+    border-bottom-color: var(--modalLine)!important;
+    background-color: var(--modalbg)!important;
+    padding: 5px 10px;
+}
+
+.ant-modal-title {
+    color: #fff!important;
+    font-size: 13px;
+    max-width: 155px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ant-modal-body {
+    padding: 5px 10px;
+}
+
+.ant-modal-footer {
+    border-top-color: var(--modalLine)!important;
+    padding: 5px 10px;
+}
+
+.ant-btn-primary {
+    background: var(--mainbg)!important;
+    border-color: var(--mainbg)!important;
+}
+
+.ant-btn-primary:hover {
+    background: var(--secondbg)!important;
+    border-color: var(--btnPrimaryHover)!important;
+    color: var(--btnPrimaryHover)!important;
+}
+
+.ant-btn {
+    color: var(--mainColor);
+    background-color: var(--btnbg);
+    border-color: var(--btnbg);
+}
+
+.ant-btn:hover {
+    color: var(--secondColor);
+    background-color: var(--btnbg);
+    border-color: var(--secondbg);
+}
+
+.ant-modal-close {
+    top: -10px;
+    right: -10px;
+}
+
+.ant-input.text-area:focus {
+    box-shadow: 0 0 5px 0 var(--inputFocus);
+}
+
+input.ant-input {
+    padding: 0 5px;
+    margin-right: 6px;
+}
+
+input.ant-input:hover {
+    border-color: var(--inputFocus);
+}
+
+input.ant-input:focus {
+    border-color: var(--inputFocus);
+}

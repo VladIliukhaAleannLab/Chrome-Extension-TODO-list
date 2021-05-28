@@ -1,0 +1,19 @@
+:root {
+    --mainColor: white;
+    --secondColor: black;
+    --modalbg: #54575b;
+    --btnbg: #747474;
+    --mainbg: #282c34;
+    --btnPrimaryHover: red;
+    --secondbg: #111111;
+    --removeBtn: red;
+    --modalLine: red;
+    --scrollbg: red;
+    --inputFocus: #ff00008f;
+    --todoListMainColor: orangered;
+    --todoColor: greenyellow;
+    --inProgressColor: gold;
+    --completeColor: white;
+    --textareabg: #383a3e;
+    --datecolor: #ffffffbf;
+}
