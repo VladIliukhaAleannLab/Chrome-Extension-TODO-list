@@ -5,4 +5,4 @@ npm run install
 
 npm run start
 
-npm run deploy-zip
+npm run build-zip
