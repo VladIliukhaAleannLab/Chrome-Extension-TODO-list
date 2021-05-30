@@ -1,6 +1,4 @@
-//types
-const SET_SIZE = 'SET_SIZE';
-
+import {getLocalStoreItem, updateLocalStorage} from "../helpers";
 
 const defaultState = {
     '--mainColor': 'white',
@@ -55,19 +53,29 @@ const SIZE = {
 };
 
 
+//types
+const SET_SIZE = 'SET_SIZE';
+
+
 // reducer
 export default (state = defaultState, action) => {
     const {type, payload} = action;
     switch (type) {
         case SET_SIZE:
+            updateLocalStorage('size', payload);
             return {
                 ...state, ...SIZE[payload]
             };
         default:
-            return state
+            return getState(state)
     }
 }
 
+const getState = (state) => {
+    const cacheType = getLocalStoreItem('size');
+    if (cacheType) return {...state, ...SIZE[cacheType]};
+    return state
+};
 
 // actions
 export const setSize = (size) => ({type: SET_SIZE, payload: size});

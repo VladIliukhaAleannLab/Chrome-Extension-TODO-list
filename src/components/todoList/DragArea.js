@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {DragDropContext, Droppable} from 'react-beautiful-dnd';
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {Input} from "antd";
 import {hardCopy, getRandomInt, INIT_DATA} from "./helpers";
 import DroppableList from "./DroppableList";
@@ -137,18 +137,17 @@ const TopContainer = () => {
     )
 };
 
-const BottomContainer = ({items, setItems}) => {
+const BottomContainer = () => {
     const [text, setText] = useState('');
+    const dispatch = useDispatch();
     const add = () => {
         if (text) {
-            const tempItems = hardCopy(items);
             const newItem = {
                 id: getRandomInt(),
                 createDate: new Date().toString(),
                 text,
             };
-            tempItems[TODO].items = [newItem, ...tempItems[TODO].items];
-            setItems(tempItems);
+            dispatch(addListItem(newItem));
             setText('');
         }
     };
