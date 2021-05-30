@@ -12,14 +12,7 @@ const GlobalStyle = createGlobalStyle`
     }
 `;
 
-const StyleWrap = ({children}) => {
+export default () => {
     const style = useSelector(state => state.styles);
-    return (
-        <>
-            <GlobalStyle style={style}/>
-            {children}
-        </>
-    )
+    return (<GlobalStyle style={style}/>)
 };
-
-export default StyleWrap;

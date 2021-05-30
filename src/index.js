@@ -5,14 +5,13 @@ import {store} from "./reducers";
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import StyleWrap from "./StyleWrap";
+import GlobalStyle from "./GlobalStyle";
 
 ReactDOM.render(
     <React.StrictMode>
         <Provider store={store}>
-            <StyleWrap>
-                <App />
-            </StyleWrap>
+            <GlobalStyle />
+            <App />
         </Provider>
     </React.StrictMode>
             ,
