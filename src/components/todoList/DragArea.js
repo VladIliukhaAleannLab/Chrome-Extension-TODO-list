@@ -1,16 +1,17 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {DragDropContext, Droppable} from 'react-beautiful-dnd';
+import {useDispatch} from "react-redux";
+import {Input} from "antd";
 import {hardCopy, getRandomInt, INIT_DATA} from "./helpers";
 import DroppableList from "./DroppableList";
-import {Input} from "antd";
-import {StyleContext} from "../../StyleWrap";
+import {setSize} from "../../reducers/stylesReducer";
 
 const TODO = 0;
 const IN_PROGRESS = 1;
 const COMPLETE = 2;
 
 
-const DragArea = ({...props}) => {
+const DragArea = () => {
     const [items, _setItems] = useState(null);
     const [groups, setGroups] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -55,7 +56,7 @@ const DragArea = ({...props}) => {
                         }
                     })
                 }
-        )
+            )
         }))
     };
 
@@ -88,7 +89,7 @@ const DragArea = ({...props}) => {
 
     return (
         <>
-            <TopContainer className={'top-container'}/>
+            <TopContainer />
             <Flow
                 updateItems={updateItems}
                 items={items}
@@ -106,8 +107,8 @@ const DragArea = ({...props}) => {
 };
 
 const TopContainer = () => {
-    const [size, setSize] = useState('small');
-    const {styleJSON, setStyle} = useContext(StyleContext);
+    const [sizeType, setTypeSize] = useState('small');
+    const dispatch = useDispatch();
 
 
     useEffect(() => {
@@ -119,20 +120,20 @@ const TopContainer = () => {
     }, []);
 
     const _setSize = (val) => {
-        setStyle(styleJSON['size'][val]);
         localStorage.setItem('size', val);
-        setSize(val);
+        dispatch(setSize(val));
+        setTypeSize(val);
     };
 
     return (
-      <div className={'top-container'}>
-          <div
-              className={'set-size'}
-              onClick={() => _setSize(size === 'small' ? 'big' : 'small')}
-          >
-              {size === 'small' ? '+' : '-'}
-          </div>
-      </div>
+        <div className={'top-container'}>
+            <div
+                className={'set-size'}
+                onClick={() => _setSize(sizeType === 'small' ? 'big' : 'small')}
+            >
+                {sizeType === 'small' ? '+' : '-'}
+            </div>
+        </div>
     )
 };
 
@@ -159,19 +160,19 @@ const BottomContainer = ({items, setItems}) => {
                 onChange={(e) => setText(e.target.value)}
                 onPressEnter={add}
             />
-                <div className={'add-btn'} onClick={add}> Add</div>
+            <div className={'add-btn'} onClick={add}> Add</div>
         </div>
     )
 };
 
 
 const Flow = ({
-                      items,
-                      setItems,
-                      groups,
-                      buildAndSave,
-                      ...props
-                  }) => {
+                  items,
+                  setItems,
+                  groups,
+                  buildAndSave,
+                  ...props
+              }) => {
 
     return (
         <DragDropContext
