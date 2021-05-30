@@ -26,7 +26,8 @@ const defaultState = {
     '--heightList': '230px',
     '--heightOverflowList': '60px',
     '--widthItem': '99%',
-    '--marginItem': '2px auto'
+    '--marginItem': '2px auto',
+    '--maxWidthModalTitle': '90%',
 };
 
 const SMALL_SIZE = {
@@ -35,7 +36,8 @@ const SMALL_SIZE = {
     '--heightList': '230px',
     '--heightOverflowList': '60px',
     '--widthItem': '99%',
-    '--marginItem': '2px auto'
+    '--marginItem': '2px auto',
+    '--maxWidthModalTitle': '90%',
 };
 
 const BIG_SIZE = {
@@ -44,7 +46,8 @@ const BIG_SIZE = {
     '--heightList': '415px',
     '--heightOverflowList': '116px',
     '--widthItem': 'auto',
-    '--marginItem': '2px 40px'
+    '--marginItem': '2px 40px',
+    '--maxWidthModalTitle': '95%',
 };
 
 const SIZE = {
