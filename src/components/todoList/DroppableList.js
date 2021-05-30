@@ -2,7 +2,7 @@ import React from 'react'
 import {Draggable, Droppable} from "react-beautiful-dnd";
 import {DragItem} from "./DragItem";
 
-const DroppableList = ({id, items, removeItem, updateItems}) => {
+const DroppableList = ({id, items}) => {
     const droppableStyle = {
         minHeight: '18px',
         marginBottom: '10px',
@@ -34,11 +34,7 @@ const DroppableList = ({id, items, removeItem, updateItems}) => {
                                             {...provided.dragHandleProps}
                                             ref={provided.innerRef}
                                         >
-                                            <DragItem
-                                                item={item}
-                                                removeItem={removeItem}
-                                                updateItems={updateItems}
-                                            />
+                                            <DragItem item={item}/>
                                         </div>
                                     )}
                                 </Draggable>

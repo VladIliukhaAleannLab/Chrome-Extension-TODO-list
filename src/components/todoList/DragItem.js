@@ -1,8 +1,13 @@
 import React, {useState} from "react";
 import ItemInfoModal from "./ItemInfo";
+import {useDispatch} from "react-redux";
+import {removeListItem} from "../../reducers/listReducer";
 
-export const DragItem = ({item, removeItem, updateItems}) => {
+export const DragItem = ({item}) => {
     const [isVisible, setVisible] = useState(false);
+
+    const dispatch = useDispatch();
+    const removeItem = (itemId) => dispatch(removeListItem(itemId));
 
     return (
         <span className={'item-wrap flex center'}>
@@ -13,7 +18,6 @@ export const DragItem = ({item, removeItem, updateItems}) => {
                     item={item}
                     isVisible={isVisible}
                     setVisible={setVisible}
-                    updateItems={updateItems}
                 />
 
             }

@@ -2,9 +2,10 @@ import React, {useEffect, useState} from "react";
 import {DragDropContext, Droppable} from 'react-beautiful-dnd';
 import {useDispatch, useSelector} from "react-redux";
 import {Input} from "antd";
-import {hardCopy, getRandomInt, INIT_DATA} from "./helpers";
 import DroppableList from "./DroppableList";
 import {setSize} from "../../reducers/stylesReducer";
+import {addListItem, setList} from "../../reducers/listReducer";
+import {getLocalStoreItem, getRandomInt} from "../../helpers";
 
 const TODO = 0;
 const IN_PROGRESS = 1;
@@ -12,96 +13,12 @@ const COMPLETE = 2;
 
 
 const DragArea = () => {
-    const [items, _setItems] = useState(null);
-    const [groups, setGroups] = useState(null);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        try {
-            const cacheDate = JSON.parse(localStorage.getItem('todoList'));
-            if (cacheDate && cacheDate.length > 0) {
-                setItems(cacheDate)
-            } else {
-                setItems(INIT_DATA)
-            }
-        } catch (e) {
-            setItems(INIT_DATA);
-        }
-        setLoading(false);
-
-    }, []);
-
-
-    useEffect(() => {
-        // Mock an API call.
-        items && buildAndSave(items);
-    }, [items]);
-
-    const setItems = (data) => {
-        _setItems(data);
-        localStorage.setItem('todoList', JSON.stringify(data))
-    };
-
-    const updateItems = (item) => {
-        const tempItems = hardCopy(items);
-        setItems(tempItems.map((list) => {
-            return (
-                {
-                    ...list,
-                    items: list.items.map((el) => {
-                        if (el.id === item.id) {
-                            return {...item}
-                        } else {
-                            return {...el}
-                        }
-                    })
-                }
-            )
-        }))
-    };
-
-    const removeItem = (itemId) => {
-        const tempItems = hardCopy(items);
-        setItems(tempItems.map((list) => {
-            return {
-                ...list,
-                items: list.items.filter(({id}) => id !== itemId)
-            }
-        }))
-    };
-
-    const buildAndSave = (items) => {
-        const groups = {};
-        for (let i = 0; i < Object.keys(items).length; ++i) {
-            const currentGroup = items[i];
-            groups[currentGroup.id] = i;
-        }
-        // Set the data.
-        setItems(items);
-
-        // Makes the groups searchable via their id.
-        setGroups(groups);
-    };
-
-    if (loading) {
-        return <span>Please wait</span>
-    }
 
     return (
         <>
             <TopContainer />
-            <Flow
-                updateItems={updateItems}
-                items={items}
-                setItems={setItems}
-                groups={groups}
-                buildAndSave={buildAndSave}
-                removeItem={removeItem}
-            />
-            <BottomContainer
-                items={items}
-                setItems={setItems}
-            />
+            <Flow />
+            <BottomContainer />
         </>
     );
 };
@@ -110,17 +27,12 @@ const TopContainer = () => {
     const [sizeType, setTypeSize] = useState('small');
     const dispatch = useDispatch();
 
-
     useEffect(() => {
-        let _size = localStorage.getItem('size');
-        if (!_size) {
-            _size = 'small'
-        }
-        _setSize(_size);
+        const cacheType = getLocalStoreItem('size');
+        setTypeSize(cacheType || 'small');
     }, []);
 
     const _setSize = (val) => {
-        localStorage.setItem('size', val);
         dispatch(setSize(val));
         setTypeSize(val);
     };
@@ -165,13 +77,32 @@ const BottomContainer = () => {
 };
 
 
-const Flow = ({
-                  items,
-                  setItems,
-                  groups,
-                  buildAndSave,
-                  ...props
-              }) => {
+const Flow = () => {
+
+    const [groups, setGroups] = useState(null);
+
+    const items = useSelector(state => state.todoList);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        buildAndSave(items)
+    }, []);
+
+
+    const setItems = (newList) => {
+        dispatch(setList(newList));
+        buildAndSave(items)
+    };
+
+    const buildAndSave = (items) => {
+        const groups = {};
+        for (let i = 0; i < Object.keys(items).length; ++i) {
+            const currentGroup = items[i];
+            groups[currentGroup.id] = i;
+        }
+        // Makes the groups searchable via their id.
+        setGroups(groups);
+    };
 
     return (
         <DragDropContext
@@ -229,9 +160,9 @@ const Flow = ({
                         ref={provided.innerRef}
                     >
                         <div className={'wrap-list'}>
-                            <List id={'Todo'} className={'todo'} items={items[TODO].items} {...props}/>
-                            <List id={'In progress'} className={'in-progress'} items={items[IN_PROGRESS].items} {...props}/>
-                            <List id={'Complete'} className={'complete'} items={items[COMPLETE].items} {...props}/>
+                            <List id={'Todo'} className={'todo'} items={items[TODO].items} />
+                            <List id={'In progress'} className={'in-progress'} items={items[IN_PROGRESS].items} />
+                            <List id={'Complete'} className={'complete'} items={items[COMPLETE].items} />
                         </div>
 
 

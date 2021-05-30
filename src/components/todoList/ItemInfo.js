@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
 import {Modal, Input} from "antd";
+import {useDispatch} from "react-redux";
+import {updateListItem} from "../../reducers/listReducer";
 
 const { TextArea } = Input;
 
@@ -7,11 +9,13 @@ const ItemInfoModal = ({
     item,
     handleCancel,
     isVisible,
-    setVisible,
-    updateItems
+    setVisible
 }) => {
     const [text, setText] = useState(item.info || '');
 
+    const dispatch = useDispatch();
+
+    const updateItems = (item) => dispatch(updateListItem(item));
 
     const handleOk = () => {
       const tempItem = {...item};
