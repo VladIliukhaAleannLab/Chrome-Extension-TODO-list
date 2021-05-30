@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {Provider} from 'react-redux';
+import {store} from "./reducers";
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -7,9 +9,11 @@ import StyleWrap from "./StyleWrap";
 
 ReactDOM.render(
     <React.StrictMode>
-        <StyleWrap>
-            <App />
-        </StyleWrap>
+        <Provider store={store}>
+            <StyleWrap>
+                <App />
+            </StyleWrap>
+        </Provider>
     </React.StrictMode>
             ,
     document.getElementById('root')
