@@ -5,6 +5,7 @@ import 'antd/dist/antd.css';
 import domAction from "./dom/domAction";
 import TodoList from "./components/todoList";
 import bgAction from "./dom/bgAction";
+import FlameBG from "./components/canvas/FlameBG";
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
 
     return (
         <div className="App">
+            <FlameBG />
             <TodoList/>
         </div>
     );
