@@ -61,7 +61,7 @@ const SET_SIZE = 'SET_SIZE';
 
 
 // reducer
-export default (state = defaultState, action) => {
+export default (state = getDefaultState(), action) => {
     const {type, payload} = action;
     switch (type) {
         case SET_SIZE:
@@ -70,14 +70,14 @@ export default (state = defaultState, action) => {
                 ...state, ...SIZE[payload]
             };
         default:
-            return getState(state)
+            return state
     }
 }
 
-const getState = (state) => {
+const getDefaultState = () => {
     const cacheType = getLocalStoreItem('size');
-    if (cacheType) return {...state, ...SIZE[cacheType]};
-    return state
+    if (cacheType) return {...defaultState, ...SIZE[cacheType]};
+    return defaultState
 };
 
 // actions

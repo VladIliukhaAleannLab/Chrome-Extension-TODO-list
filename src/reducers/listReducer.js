@@ -24,7 +24,7 @@ const ADD_ITEM = 'ADD_ITEM';
 
 
 // reducer
-export default (state = INIT_STATE, action) => {
+export default (state = getDefaultState(), action) => {
     const {type, payload} = action;
     let newState;
     switch (type) {
@@ -67,14 +67,14 @@ export default (state = INIT_STATE, action) => {
             return newState;
 
         default:
-            return getState(state);
+            return state;
     }
 }
 
-const getState = (state) => {
+const getDefaultState = () => {
     const cacheItem = getLocalStoreItem('todoList');
     if (cacheItem) return cacheItem;
-    return state
+    return INIT_STATE
 };
 
 
