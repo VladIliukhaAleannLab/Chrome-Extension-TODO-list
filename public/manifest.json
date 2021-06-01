@@ -18,7 +18,7 @@
     "run_at": "document_end"
   }],
   "background": {
-    "page": "src/bg/background.html",
+    "page": "background.html",
     "persistent": true
   }
 }
