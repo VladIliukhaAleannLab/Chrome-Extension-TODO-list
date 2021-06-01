@@ -1,9 +1,10 @@
 
 .App {
+    position: relative;
     text-align: center;
     height: var(--appHeight);
     width: var(--appWidth);
-    background-color: var(--mainbg);
+    background-color: transparent;
     display: flex;
     flex-direction: column;
     color: var(--mainColor);
