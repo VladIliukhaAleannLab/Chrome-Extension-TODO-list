@@ -3,17 +3,11 @@ import {Draggable, Droppable} from "react-beautiful-dnd";
 import {DragItem} from "./DragItem";
 
 const DroppableList = ({id, items}) => {
-    const droppableStyle = {
-        minHeight: '18px',
-        marginBottom: '10px',
-        overflow: 'auto'
-    };
     return (
         <Droppable droppableId={id}>
             {(provided) => (
                 <div
                     className={'droppable-list'}
-                    style={droppableStyle}
                     {...provided.droppableProps}
                     ref={provided.innerRef}
                 >

@@ -143,3 +143,9 @@ textarea {
     font-size: 0.7rem;
     color: var(--datecolor);
 }
+
+.droppable-list {
+    min-height: var(--minWidthDroppableList);
+    margin-bottom: 10px;
+    overflow: auto;
+}
