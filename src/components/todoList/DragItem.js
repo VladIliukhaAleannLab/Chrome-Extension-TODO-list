@@ -1,9 +1,9 @@
-import React, {useState} from "react";
+import React, {memo, useState} from "react";
 import ItemInfoModal from "./ItemInfo";
 import {useDispatch} from "react-redux";
 import {removeListItem} from "../../reducers/listReducer";
 
-export const DragItem = ({item}) => {
+const DragItem = ({item}) => {
     const [isVisible, setVisible] = useState(false);
 
     const dispatch = useDispatch();
@@ -25,3 +25,6 @@ export const DragItem = ({item}) => {
         </span>
     )
 };
+
+export default memo(DragItem);
+// export default DragItem

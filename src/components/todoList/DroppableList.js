@@ -1,6 +1,6 @@
-import React from 'react'
+import React, {memo} from 'react'
 import {Draggable, Droppable} from "react-beautiful-dnd";
-import {DragItem} from "./DragItem";
+import DragItem from "./DragItem";
 
 const DroppableList = ({id, items}) => {
     return (
@@ -42,4 +42,6 @@ const DroppableList = ({id, items}) => {
     );
 };
 
-export default DroppableList;
+const memoList = memo(DroppableList);
+
+export default memoList;
