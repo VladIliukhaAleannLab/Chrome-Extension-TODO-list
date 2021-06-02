@@ -6,6 +6,7 @@ const GlobalStyle = createGlobalStyle`
     body, html {
         height: var(--appHeight);
         width: var(--appWidth);
+        user-select: none;
     }
     :root {
         ${({style}) => Object.entries(style).map(([key, value]) => `${key}: ${value};`)}

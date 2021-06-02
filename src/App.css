@@ -23,12 +23,12 @@
     width: calc(100vw - 20px);
     overflow: hidden;
     max-height: calc(95vh - 20px);
-    background-color: var(--modalbg)!important;
+    background: var(--modalbg)!important;
 }
 
 .ant-modal-header {
     border-bottom-color: var(--modalLine)!important;
-    background-color: var(--modalbg)!important;
+    background: var(--modalbg)!important;
     padding: 5px 10px;
 }
 
@@ -50,6 +50,19 @@
     padding: 5px 10px;
 }
 
+
+.ant-btn {
+    color: var(--mainColor)!important;
+    background-color: var(--btnbg)!important;
+    border-color: var(--btnbg)!important;
+}
+
+.ant-btn:hover {
+    color: var(--secondColor) !important;
+    border-color: var(--btnPrimaryHover)!important;
+    color: var(--btnPrimaryHover)!important;
+}
+
 .ant-btn-primary {
     background: var(--mainbg)!important;
     border-color: var(--mainbg)!important;
@@ -59,18 +72,6 @@
     background: var(--secondbg)!important;
     border-color: var(--btnPrimaryHover)!important;
     color: var(--btnPrimaryHover)!important;
-}
-
-.ant-btn {
-    color: var(--mainColor);
-    background-color: var(--btnbg);
-    border-color: var(--btnbg);
-}
-
-.ant-btn:hover {
-    color: var(--secondColor);
-    background-color: var(--btnbg);
-    border-color: var(--secondbg);
 }
 
 .ant-modal-close {

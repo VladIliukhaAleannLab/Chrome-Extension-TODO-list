@@ -133,7 +133,7 @@ textarea {
 }
 
 .text-area {
-    background-color: var(--textareabg);
+    background: var(--textareabg);
     border: none;
     color: var(--mainColor);
     font-size: 12px;
