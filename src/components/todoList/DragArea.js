@@ -6,6 +6,7 @@ import DroppableList from "./DroppableList";
 import {setSize} from "../../reducers/stylesReducer";
 import {addListItem, setList} from "../../reducers/listReducer";
 import {getLocalStoreItem, getRandomInt} from "../../helpers";
+import useTextField from "../../hooks/useTextField";
 
 const TODO = 0;
 const IN_PROGRESS = 1;
@@ -50,26 +51,25 @@ const TopContainer = () => {
 };
 
 const BottomContainer = () => {
-    const [text, setText] = useState('');
+    const addInput = useTextField('');
     const dispatch = useDispatch();
     const add = () => {
-        if (text) {
+        if (addInput.value) {
             const newItem = {
                 id: getRandomInt(),
                 createDate: new Date().toString(),
-                text,
+                text: addInput.value,
             };
             dispatch(addListItem(newItem));
-            setText('');
+            addInput.onChange({target: {value: ''}});
         }
     };
 
     return (
         <div className={'flex space-around margin-top-15'}>
             <Input
-                value={text}
-                onChange={(e) => setText(e.target.value)}
                 onPressEnter={add}
+                {...addInput}
             />
             <div className={'add-btn'} onClick={add}> Add</div>
         </div>

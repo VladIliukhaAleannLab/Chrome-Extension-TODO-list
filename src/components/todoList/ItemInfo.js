@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Modal, Input} from "antd";
 import {useDispatch} from "react-redux";
 import {updateListItem} from "../../reducers/listReducer";
+import useTextField from "../../hooks/useTextField";
 
 const { TextArea } = Input;
 
@@ -11,7 +12,7 @@ const ItemInfoModal = ({
     isVisible,
     setVisible
 }) => {
-    const [text, setText] = useState(item.info || '');
+    const textArea = useTextField(item.info);
 
     const dispatch = useDispatch();
 
@@ -19,7 +20,7 @@ const ItemInfoModal = ({
 
     const handleOk = () => {
       const tempItem = {...item};
-      tempItem.info = text;
+      tempItem.info = textArea.value;
       updateItems(tempItem);
       setVisible(false)
     };
@@ -48,8 +49,7 @@ const ItemInfoModal = ({
                     <TextArea
                         className={'text-area'}
                         rows={9}
-                        value={text}
-                        onChange={(e) => setText(e.target.value)}
+                        {...textArea}
                     />
                 </div>
             </Modal>
