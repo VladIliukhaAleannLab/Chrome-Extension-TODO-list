@@ -95,3 +95,18 @@ input.ant-input:hover {
 input.ant-input:focus {
     border-color: var(--inputFocus);
 }
+
+div::-webkit-scrollbar, textarea::-webkit-scrollbar {
+    width: 3px;
+}
+
+/* Track */
+div::-webkit-scrollbar-track, textarea::-webkit-scrollbar-track {
+    background: var(--scrollbg);
+}
+
+/* Handle */
+div::-webkit-scrollbar-thumb, textarea::-webkit-scrollbar-thumb {
+    background: var(--thumbdbg);
+    cursor: grab;
+}

@@ -10,7 +10,7 @@ const defaultState = {
     '--secondbg': '#111111',
     '--removeBtn': 'red',
     '--modalLine': 'red',
-    '--scrollbg': 'red',
+    '--scrollbg': '#ff45004f',
     '--inputFocus': '#ff00008f',
     '--todoListMainColor': 'orangered',
     '--todoColor': 'greenyellow',
@@ -29,6 +29,7 @@ const defaultState = {
     '--marginItem': '2px auto',
     '--maxWidthModalTitle': '90%',
     '--minWidthDroppableList': '18px',
+    '--thumbdbg': 'orangered'
 };
 
 const SMALL_SIZE = {
