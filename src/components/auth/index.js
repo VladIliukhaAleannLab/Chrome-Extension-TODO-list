@@ -22,7 +22,7 @@ export default ({user}) => {
     };
 
     const onSignIn = () => {
-
+        console.log('test')
     };
 
     return (
