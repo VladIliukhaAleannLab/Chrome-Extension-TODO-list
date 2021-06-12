@@ -29,7 +29,8 @@ const defaultState = {
     '--marginItem': '2px auto',
     '--maxWidthModalTitle': '90%',
     '--minWidthDroppableList': '18px',
-    '--thumbdbg': 'orangered'
+    '--thumbdbg': 'orangered',
+    '--error': 'red'
 };
 
 const SMALL_SIZE = {

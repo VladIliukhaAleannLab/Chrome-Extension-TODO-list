@@ -6,20 +6,23 @@ import domAction from "./dom/domAction";
 import TodoList from "./components/todoList";
 import bgAction from "./dom/bgAction";
 import FlameBG from "./components/canvas/FlameBG";
-
+import {useSelector} from "react-redux";
+import Auth from "./components/auth";
 
 function App() {
 
-    const test = async () => {
-        await domAction('alert', {text: 'hello'})
-    };
-
-    window.test = test
+    const user = useSelector(state => state.user);
 
     return (
         <div className="App">
             <FlameBG />
-            <TodoList/>
+            {
+                user.isLogin ? (
+                    <TodoList/>
+                ) : (
+                    <Auth user={user}/>
+                )
+            }
         </div>
     );
 }
