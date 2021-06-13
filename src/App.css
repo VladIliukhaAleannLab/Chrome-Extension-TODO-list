@@ -110,3 +110,24 @@ div::-webkit-scrollbar-thumb, textarea::-webkit-scrollbar-thumb {
     background: var(--thumbdbg);
     cursor: grab;
 }
+
+.status {
+    position: absolute;
+    left: 15px;
+    font-size: 10px;
+    z-index: 100;
+}
+
+.status .online {
+    color: var(--todoColor);
+    font-size: 9px;
+    margin-top: -4px;
+    text-align: left;
+}
+
+.status .offline {
+    color: var(--todoListMainColor);
+    font-size: 9px;
+    margin-top: -4px;
+    text-align: left;
+}

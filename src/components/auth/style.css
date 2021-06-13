@@ -6,6 +6,10 @@
     justify-content: center;
 }
 
+.cursor {
+    cursor: pointer;
+}
+
 .err-message {
     margin-top: -15px;
     color: var(--error);

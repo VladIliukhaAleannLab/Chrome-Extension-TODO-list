@@ -8,6 +8,7 @@ import bgAction from "./dom/bgAction";
 import FlameBG from "./components/canvas/FlameBG";
 import {useSelector} from "react-redux";
 import Auth from "./components/auth";
+import StatusWrap from "./components/wrappers/StatusWrap";
 
 function App() {
 
@@ -18,7 +19,9 @@ function App() {
             <FlameBG />
             {
                 user.isLogin ? (
-                    <TodoList/>
+                    <StatusWrap>
+                        <TodoList/>
+                    </StatusWrap>
                 ) : (
                     <Auth user={user}/>
                 )
