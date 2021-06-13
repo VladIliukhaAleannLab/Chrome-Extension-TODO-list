@@ -33,14 +33,19 @@ export const authUser = async (user) => {
 
 export const createOtUpdateItem = (item, type) => {
     try {
-        switch (type) {
-            case 'delete':
-                axios[type](getUrl('item') + `?id=${item.id}&user=${item.user}`).then();
-                break;
-            default:
-                axios[type](getUrl('item'), {item}).then();
-                break
-        }
+        checkServer().then((status) => {
+            if (status) {
+                switch (type) {
+                    case 'delete':
+                        axios[type](getUrl('item') + `?id=${item.id}&user=${item.user}`).then();
+                        break;
+                    default:
+                        axios[type](getUrl('item'), {item}).then();
+                        break
+                }
+            }
+        });
+
     } catch (e) {
 
     }
@@ -49,6 +54,8 @@ export const createOtUpdateItem = (item, type) => {
 export const syncListItems = async (user, list) => {
     try {
         if (!user) return;
+        const status = await checkServer();
+        if (!status) return;
         const items = list.map((el) => el.items ).flat();
         const {data} = await axios.post(getUrl('sync'), {user, items});
         return data

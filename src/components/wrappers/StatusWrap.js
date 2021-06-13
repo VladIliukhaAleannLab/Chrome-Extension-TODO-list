@@ -4,6 +4,7 @@ import {logOut} from "../../reducers/userReducer";
 import {checkServer, syncListItems, syncListItemsForBtn} from "../../api";
 import {Tooltip} from "antd";
 import {setList} from "../../reducers/listReducer";
+import {getLocalStoreItem} from "../../helpers";
 
 export default ({children}) => {
     const [isLoad, setLoad] = useState(false);
@@ -11,8 +12,9 @@ export default ({children}) => {
 
     const timeout = useRef(null);
     const syncTimout = useRef(null);
+    const debounceSync = useRef(null);
 
-    const {items, user} = useSelector(state => ({items: state.todoList, ...state}));
+    const {user} = useSelector(state => ({items: state.todoList, ...state}));
 
     const dispatch = useDispatch();
     const onLogOut = () => {
@@ -21,18 +23,26 @@ export default ({children}) => {
 
     const onCheckServer = async () => {
         const isStatus = await checkServer();
-        setOnline(isStatus);
+        setOnline((prevState) => {
+            if (!prevState && isStatus) {
+                if (debounceSync.current) clearTimeout(debounceSync.current);
+                debounceSync.current = setTimeout(() => onSyncList(false).then(), 500)
+            }
+            return isStatus
+        });
         setLoad(true);
         timeout.current = setTimeout(async () => await onCheckServer(), 20000)
     };
 
-    const onSyncList = async () => {
-
+    const onSyncList = async (isTimout = true) => {
+        const items = getLocalStoreItem('todoList');
         const res = await syncListItems(user.name, items);
         if (res?.status) {
             dispatch(setList(res.list));
         }
-        syncTimout.current = setTimeout(async () => await onSyncList(), 60000)
+        if (isTimout) {
+            syncTimout.current = setTimeout(async () => await onSyncList(), 180000)
+        }
     };
 
     const syncList = async () => {
@@ -45,13 +55,16 @@ export default ({children}) => {
     useEffect(() => {
 
         onCheckServer().then();
-        onSyncList().then();
+        const timeOut = setTimeout(() => onSyncList().then(), 180000);
         return () => {
             if (timeout.current) {
                 clearTimeout(timeout.current)
             }
             if (syncTimout.current) {
                 clearTimeout(syncTimout.current)
+            }
+            if (timeOut) {
+                clearTimeout(timeOut)
             }
         }
     }, []);
