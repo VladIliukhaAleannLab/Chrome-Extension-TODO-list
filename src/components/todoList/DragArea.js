@@ -7,6 +7,7 @@ import {setSize} from "../../reducers/stylesReducer";
 import {addListItem, setList} from "../../reducers/listReducer";
 import {getLocalStoreItem, getRandomInt} from "../../helpers";
 import useTextField from "../../hooks/useTextField";
+import {createOtUpdateItem} from "../../api";
 
 const TODO = 0;
 const IN_PROGRESS = 1;
@@ -53,13 +54,18 @@ const TopContainer = () => {
 const BottomContainer = () => {
     const addInput = useTextField('');
     const dispatch = useDispatch();
+    const user = useSelector(state => state.user);
+
     const add = () => {
         if (addInput.value) {
             const newItem = {
                 id: getRandomInt(),
                 createDate: new Date().toString(),
                 text: addInput.value,
+                user: user.name,
+                type: 'Todo'
             };
+            user.name && createOtUpdateItem(newItem, 'post');
             dispatch(addListItem(newItem));
             addInput.onChange({target: {value: ''}});
         }
@@ -81,7 +87,8 @@ const Flow = () => {
 
     const [groups, setGroups] = useState(null);
 
-    const items = useSelector(state => state.todoList);
+    const {items, user} = useSelector(state => ({items: state.todoList, ...state}));
+
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -138,6 +145,9 @@ const Flow = () => {
 
                 // Pull the item from the source.
                 const [deletedItem,] = sourceItems.splice(source.index, 1);
+
+                user.name && createOtUpdateItem ({...deletedItem, type: destination.droppableId}, 'put');
+
                 targetItems.splice(destination.index, 0, deletedItem);
 
                 const workValue = items.slice();

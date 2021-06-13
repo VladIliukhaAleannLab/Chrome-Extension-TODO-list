@@ -1,8 +1,9 @@
 import React from 'react';
 import {Modal, Input} from "antd";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {updateListItem} from "../../reducers/listReducer";
 import useTextField from "../../hooks/useTextField";
+import {createOtUpdateItem} from "../../api";
 
 const { TextArea } = Input;
 
@@ -14,9 +15,13 @@ const ItemInfoModal = ({
 }) => {
     const textArea = useTextField(item.info);
 
+    const user = useSelector(state => state.user);
     const dispatch = useDispatch();
 
-    const updateItems = (item) => dispatch(updateListItem(item));
+    const updateItems = (item) => {
+        user.name && createOtUpdateItem(item, 'put');
+        dispatch(updateListItem(item))
+    };
 
     const handleOk = () => {
       const tempItem = {...item};

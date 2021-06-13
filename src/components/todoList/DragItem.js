@@ -1,13 +1,18 @@
 import React, {memo, useState} from "react";
 import ItemInfoModal from "./ItemInfo";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {removeListItem} from "../../reducers/listReducer";
+import {createOtUpdateItem} from "../../api";
 
 const DragItem = ({item}) => {
     const [isVisible, setVisible] = useState(false);
 
+    const user = useSelector(state => state.user);
     const dispatch = useDispatch();
-    const removeItem = (itemId) => dispatch(removeListItem(itemId));
+    const removeItem = (itemId) => {
+        user.name && createOtUpdateItem(item, 'delete');
+        dispatch(removeListItem(itemId))
+    };
 
     return (
         <span className={'item-wrap flex center'}>
