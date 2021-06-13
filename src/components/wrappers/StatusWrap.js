@@ -1,16 +1,19 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {logOut} from "../../reducers/userReducer";
-import {checkServer} from "../../api";
+import {checkServer, syncListItems} from "../../api";
 import {Tooltip} from "antd";
+import {setList} from "../../reducers/listReducer";
 
 export default ({children}) => {
     const [isLoad, setLoad] = useState(false);
     const [isOnline, setOnline] = useState(false);
 
     const timeout = useRef(null);
+    const syncTimout = useRef(null);
 
-    const user = useSelector(state => state.user);
+    const {items, user} = useSelector(state => ({items: state.todoList, ...state}));
+
     const dispatch = useDispatch();
     const onLogOut = () => {
         dispatch(logOut())
@@ -23,11 +26,23 @@ export default ({children}) => {
         timeout.current = setTimeout(async () => await onCheckServer(), 20000)
     };
 
+    const onSyncList = async () => {
+        const res = await syncListItems(user.name, items);
+        if (res?.status) {
+            dispatch(setList(res.list));
+        }
+        syncTimout.current = setTimeout(async () => await onSyncList(), 60000)
+    };
+
     useEffect(() => {
         onCheckServer().then();
+        onSyncList().then();
         return () => {
-            if (timeout.ref) {
+            if (timeout.current) {
                 clearTimeout(timeout.current)
+            }
+            if (syncTimout.current) {
+                clearTimeout(syncTimout.current)
             }
         }
     }, []);

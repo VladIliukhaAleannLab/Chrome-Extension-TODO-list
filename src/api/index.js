@@ -3,9 +3,10 @@ import axios from 'axios';
 const API_URL = process.env.REACT_API_URL || 'http://localhost:8000/api/v1' ;
 
 const url = {
-    main: '/',
+    ping: '/',
     auth: '/auth',
-    item: '/item'
+    item: '/item',
+    sync: '/sync-list'
 };
 
 const getUrl = (key) => {
@@ -14,7 +15,7 @@ const getUrl = (key) => {
 
 export const checkServer = async () => {
   try {
-      await axios.get(getUrl('main'));
+      await axios.get(getUrl('ping'));
       return true
   } catch (e) {
       return false
@@ -40,6 +41,17 @@ export const createOtUpdateItem = (item, type) => {
                 axios[type](getUrl('item'), {item}).then();
                 break
         }
+    } catch (e) {
+
+    }
+};
+
+export const syncListItems = async (user, list) => {
+    try {
+        if (!user) return;
+        const items = list.map((el) => el.items ).flat();
+        const {data} = await axios.post(getUrl('sync'), {user, items});
+        return data
     } catch (e) {
 
     }

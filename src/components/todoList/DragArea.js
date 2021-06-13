@@ -59,7 +59,7 @@ const BottomContainer = () => {
     const add = () => {
         if (addInput.value) {
             const newItem = {
-                id: getRandomInt(),
+                id: `${getRandomInt()}`,
                 createDate: new Date().toString(),
                 text: addInput.value,
                 user: user.name,
@@ -148,7 +148,7 @@ const Flow = () => {
 
                 user.name && createOtUpdateItem ({...deletedItem, type: destination.droppableId}, 'put');
 
-                targetItems.splice(destination.index, 0, deletedItem);
+                targetItems.splice(destination.index, 0, {...deletedItem, type: destination.droppableId});
 
                 const workValue = items.slice();
                 workValue[sourceDroppableIndex] = {
