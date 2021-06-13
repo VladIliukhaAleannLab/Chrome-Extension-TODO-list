@@ -29,8 +29,8 @@ export default (state = getDefaultState(), action) => {
     let newState;
     switch (type) {
         case SET_LIST:
-            updateLocalStorage('todoList', payload);
-            return payload;
+            updateLocalStorage('todoList', payload ? payload : INIT_STATE);
+            return payload ? payload : INIT_STATE;
         case UPDATE_ITEM:
             newState = state.map((list) => {
                 return (

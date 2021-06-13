@@ -56,3 +56,13 @@ export const syncListItems = async (user, list) => {
 
     }
 };
+
+export const syncListItemsForBtn = async (user) => {
+    try {
+        if (!user) return;
+        const {data} = await axios.get(getUrl('sync') + '?user=' + user);
+        return data
+    } catch (e) {
+
+    }
+};

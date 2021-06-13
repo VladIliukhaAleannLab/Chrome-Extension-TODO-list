@@ -5,6 +5,8 @@ import useTextField from "../../hooks/useTextField";
 import {checkUser} from "../../reducers/userReducer";
 import './style.css'
 import {authUser} from "../../api";
+import {getLocalStoreItem} from "../../helpers";
+import {setList} from "../../reducers/listReducer";
 
 export default ({user}) => {
     const dispatch = useDispatch();
@@ -29,16 +31,26 @@ export default ({user}) => {
             res.isLogin = window.confirm(res.message);
             res.message = ''
         }
+        if (isLogin) {
+            const previewUser = getLocalStoreItem('previewUser');
+            if (previewUser !== res.name) {
+                dispatch(setList(null));
+            }
+        }
         dispatch(checkUser(res));
     };
 
+    const inputStyle = {
+        maxWidth: '370px',
+        textAlign: 'center',
+    };
     return (
         <div className={'wrap-auth'}>
             <div>Login</div>
-            <Input style={{marginBottom: '10px'}} {...loginInput}/>
+            <Input style={{...inputStyle, marginBottom: '10px'}} {...loginInput}/>
 
             <div>Password</div>
-            <Input style={{marginBottom: '15px'}} {...passwordInput}/>
+            <Input type={'password'} style={{...inputStyle, marginBottom: '15px'}} {...passwordInput}/>
             {user.message && <div className={'err-message'}>{user.message}</div>}
             <Button onClick={onAuth}>{isLogin ? 'Log In' : 'Register'}</Button>
             <span>or</span>

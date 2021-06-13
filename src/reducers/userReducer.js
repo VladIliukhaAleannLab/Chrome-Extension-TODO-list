@@ -14,6 +14,7 @@ export default (state = getDefaultState(), action) => {
     const {type, payload} = action;
     switch (type) {
         case LOG_OUT:
+            updateLocalStorage('previewUser', state.name);
             updateLocalStorage('user', payload);
             return payload;
         case CHECK_USER:
