@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = process.env.REACT_API_URL || 'http://localhost:8000/api/v1' ;
+const API_URL = process.env.REACT_API_URL || 'http://93.78.146.224:9000/api/v1' ;
 
 const url = {
     ping: '/',
