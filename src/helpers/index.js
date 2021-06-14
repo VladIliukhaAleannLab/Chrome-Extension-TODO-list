@@ -1,6 +1,19 @@
-export const updateLocalStorage = (key, data) => localStorage.setItem(key, JSON.stringify(data));
+export const updateLocalStorage = (key, data) => {
+    try {
+        localStorage.setItem(key, JSON.stringify(data));
+    } catch (e) {
+        localStorage.setItem(key, JSON.stringify(null));
+    }
+};
 
-export const getLocalStoreItem = (key) => JSON.parse(localStorage.getItem(key));
+export const getLocalStoreItem = (key) => {
+    try {
+        return JSON.parse(localStorage.getItem(key))
+    } catch (e) {
+        updateLocalStorage(key, null);
+        return null
+    }
+};
 
 export const hardCopy = (obj) => {
     return JSON.parse(JSON.stringify(obj))
