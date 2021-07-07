@@ -2,13 +2,15 @@ import React, {useState, useEffect, useRef} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {logOut} from "../../reducers/userReducer";
 import {checkServer, syncListItems, syncListItemsForBtn} from "../../api";
-import {Tooltip} from "antd";
+import {Input, Modal, Tooltip} from "antd";
 import {setList} from "../../reducers/listReducer";
-import {getLocalStoreItem} from "../../helpers";
+import {getLocalStoreItem, updateLocalStorage} from "../../helpers";
+import useTextField from "../../hooks/useTextField";
 
 export default ({children}) => {
     const [isLoad, setLoad] = useState(false);
     const [isOnline, setOnline] = useState(false);
+    const [isSettingsVisible, setSettingsVisible] = useState(false);
 
     const timeout = useRef(null);
     const syncTimout = useRef(null);
@@ -71,11 +73,13 @@ export default ({children}) => {
 
     return (
         <>
-            <Tooltip title={
-                <div>
-                    {isOnline && <div className={'cursor'} onClick={syncList}>Sync</div>}
-                    <div className={'cursor'} onDoubleClick={onLogOut} >Logout</div>
-                </div>
+            <Tooltip
+                title={
+                    !isSettingsVisible && <div>
+                        {isOnline && <div className={'cursor'} onClick={syncList}>Sync</div>}
+                        <div className={'cursor'} onClick={() => setSettingsVisible(true)}>Settings</div>
+                        <div className={'cursor'} onDoubleClick={onLogOut} >Logout</div>
+                    </div>
             }>
                 <div className={'status'}>
                     <span>{user && user.name && user.name}</span>
@@ -88,9 +92,44 @@ export default ({children}) => {
                             )
                         }
                     </div>}
+                    {isSettingsVisible && <Settings isVisible={isSettingsVisible} setVisible={setSettingsVisible}/>}
                 </div>
             </Tooltip>
             {children}
         </>
+    )
+}
+
+
+const Settings = ({isVisible, setVisible, handleOk, handleCancel}) => {
+    const style = {position: 'absolute', top: '0', zIndex: 1000};
+    const apiUrlInput = useTextField(getLocalStoreItem('api_url') || '');
+
+    const onHandlerApiUrl = (e) => {
+        apiUrlInput.onChange(e);
+        updateLocalStorage('api_url', e.target.value);
+    };
+
+    return (
+        <div className={'absolute'}>
+            <Modal
+                title={
+                    <>
+                        <div>
+                            Settings
+                        </div>
+                    </>
+                }
+                style={style}
+                visible={isVisible}
+                onOk={handleOk ? handleOk : () => setVisible(false)}
+                onCancel={handleCancel ? handleCancel : () => setVisible(false)}
+            >
+                <div>
+                    <div className={'main-color'}>Api Url</div>
+                    <Input value={apiUrlInput.value} onChange={onHandlerApiUrl}/>
+                </div>
+            </Modal>
+        </div>
     )
 }

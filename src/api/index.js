@@ -1,22 +1,26 @@
 import axios from 'axios';
+import {getLocalStoreItem} from "../helpers";
 
-const API_URL = process.env.REACT_API_URL || 'http://93.78.146.224:9000/api/v1' ;
+const getApiUrl = () => {
+    return getLocalStoreItem('api_url')
+};
+
 
 const url = {
-    ping: '/',
+    ping: '/ping',
     auth: '/auth',
     item: '/item',
     sync: '/sync-list'
 };
 
 const getUrl = (key) => {
-    return `${API_URL}${url[key]}`
+    return `${getApiUrl()}${url[key]}`
 };
 
 export const checkServer = async () => {
   try {
-      await axios.get(getUrl('ping'));
-      return true
+      const {data: pong} = await axios.get(getUrl('ping'));
+      return pong === 'pong'
   } catch (e) {
       return false
   }
