@@ -21,7 +21,7 @@ const defaultState = {
     '--completeBorderColor': '#ffffff40',
     '--textareabg': 'linear-gradient( 57deg,#23130f 0%,#2e150d 100% )',
     '--datecolor': '#ffffffbf',
-    '--appHeight': '320px',
+    '--appHeight': 'auto',
     '--appWidth': '220px',
     '--heightList': '230px',
     '--heightOverflowList': '60px',
@@ -34,7 +34,6 @@ const defaultState = {
 };
 
 const SMALL_SIZE = {
-    '--appHeight': '320px',
     '--appWidth': '220px',
     '--heightList': '230px',
     '--heightOverflowList': '60px',
@@ -45,7 +44,6 @@ const SMALL_SIZE = {
 };
 
 const BIG_SIZE = {
-    '--appHeight': '500px',
     '--appWidth': '500px',
     '--heightList': '415px',
     '--heightOverflowList': '116px',

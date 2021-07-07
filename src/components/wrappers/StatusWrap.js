@@ -113,6 +113,7 @@ const Settings = ({isVisible, setVisible, handleOk, handleCancel}) => {
     return (
         <div className={'absolute'}>
             <Modal
+                trigger={'click'}
                 title={
                     <>
                         <div>
